@@ -17,7 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "jsx": "react-jsx",
     "baseUrl": "./src",
-    "types": []
+    "types": ["jest"]
   },
   "include": ["src"],
   "ts-node": {

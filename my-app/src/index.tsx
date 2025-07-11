@@ -7,14 +7,12 @@
 
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
-
 import * as React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
-
 // Import root app
 import { App } from 'app';
 
@@ -26,6 +24,12 @@ import reportWebVitals from 'reportWebVitals';
 
 // Initialize languages
 import './locales/i18n';
+
+declare const module: {
+  hot?: {
+    accept(deps: string[], callback: () => void): void;
+  };
+};
 
 const store = configureAppStore();
 const root = ReactDOM.createRoot(
