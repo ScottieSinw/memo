@@ -8,6 +8,7 @@ const FlexRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: white;
 `;
 
 export function HomePage() {
