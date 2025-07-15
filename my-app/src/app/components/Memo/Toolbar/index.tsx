@@ -13,6 +13,9 @@ import { ReactComponent as PostAddIcon } from './assets/post_add_24dp_1F1F1F_FIL
 import { ReactComponent as MakeSizeIcon } from './assets/text_fields_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg';
 
 import ReactQuill from 'react-quill';
+import { useMemoSlice } from 'store/memo';
+import { useDispatch, useSelector } from 'react-redux';
+import { SearchMemoListSelector } from 'store/memo/selectors';
 
 let icons = ReactQuill.Quill.import('ui/icons');
 
@@ -63,14 +66,35 @@ const RightMenu = styled(Menu)`
 `;
 
 export default function MemoToolbar() {
+  const { MemoActions } = useMemoSlice();
+  const dispatch = useDispatch();
+  const search = useSelector(SearchMemoListSelector);
+
   return (
     <Box id="toolbar">
       <LeftMenu>
-        <TitleText style={{ marginLeft: '5px' }}>MEMO</TitleText>
-        <SmallButton onClick={() => {}} Icon={() => <PostDeleteIcon />} />
+        <TitleText
+          style={{ marginLeft: '5px' }}
+          onClick={() => window.location.reload()}
+        >
+          MEMO
+        </TitleText>
+        <SmallButton
+          onClick={() => {
+            dispatch(MemoActions.deleteMemo());
+          }}
+          Icon={() => <PostDeleteIcon />}
+        />
       </LeftMenu>
       <RightMenu>
-        <SmallButton onClick={() => {}} Icon={() => <PostAddIcon />} />
+        <SmallButton
+          onClick={() => {
+            dispatch(
+              MemoActions.addMemo('Create a new note', 'Create a new note'),
+            );
+          }}
+          Icon={() => <PostAddIcon />}
+        />
         <div>
           <SmallButton
             className="ql-header"
@@ -99,7 +123,12 @@ export default function MemoToolbar() {
             Icon={() => <MakeImageIcon />}
           />
           <Block marginRight="5px" />
-          <SearchInput />
+          <SearchInput
+            onChange={value =>
+              dispatch(MemoActions.searchMemo({ search: value }))
+            }
+            search={search}
+          />
         </div>
       </RightMenu>
     </Box>

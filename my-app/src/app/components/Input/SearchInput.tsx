@@ -27,17 +27,26 @@ const Input = styled.input`
   }
 `;
 
-export default function SearchInput() {
-  const [content, setContent] = React.useState('');
-
+export default function SearchInput({
+  search,
+  onChange,
+}: {
+  search: string;
+  onChange: (content: string) => void;
+}) {
   return (
     <Box>
       <SearchIcon />
       <Input
         type="text"
-        value={content}
-        placeholder="Search"
-        onChange={e => setContent(e.target.value)}
+        value={search}
+        placeholder="검색"
+        onChange={e => onChange(e.target.value)}
+        onKeyDown={e => {
+          if (search === '') return;
+          if (e.key !== 'Enter' && e.key !== 'NumpadEnter') return;
+          // 엔터를 눌렀을 때 실행할 로직을 여기에 작성
+        }}
       />
     </Box>
   );
