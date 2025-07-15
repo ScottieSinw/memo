@@ -50,7 +50,9 @@ export const MemoItem = memo(function MemoItem({
       selected={selected}
       onClick={() => dispatch(MemoActions.selectMemo({ id: id }))}
     >
-      <MemoTitle>{preview}</MemoTitle>
+      <MemoTitle>
+        {preview.replace(/\n/g, '') === '' ? 'Add Memo here...' : preview}
+      </MemoTitle>
       <MemoContent>{new Date(created_at).toLocaleString('de-DE')}</MemoContent>
       <MemoContent>{preview}</MemoContent>
     </Box>
